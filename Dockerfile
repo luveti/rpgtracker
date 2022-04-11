@@ -1,5 +1,7 @@
 FROM denoland/deno:1.20.5
 
+EXPOSE 8080
+
 # backend builder
 WORKDIR /app
 
