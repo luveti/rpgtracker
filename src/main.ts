@@ -1,10 +1,13 @@
-import { copy } from 'https://deno.land/std@0.134.0/streams/conversion.ts'
+import { serve } from 'https://deno.land/std@0.134.0/http/server.ts'
 
-const hostname = '0.0.0.0'
 const port = 8080
-const listener = Deno.listen({ hostname, port })
 
-console.log(`Listening on ${hostname}:${port}`)
-for await (const conn of listener) {
-	copy(conn, conn)
+const handler = (request: Request): Response => {
+	let body = 'Your user-agent is:\n\n'
+	body += request.headers.get('user-agent') || 'Unknown'
+
+	return new Response(body, { status: 200 })
 }
+
+console.log(`HTTP webserver running. Access it at: http://localhost:8080/`)
+await serve(handler, { port })
