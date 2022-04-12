@@ -1,13 +1,23 @@
 version: '3.9'
+networks:
+  net:
+volumes:
+  db:
 services:
     server:
+        container_name: rpgtracker-server
         build: ./src
         ports:
             - '8080:8080'
+        networks:
+            net:
     frontend:
+        container_name: rpgtracker-frontend
         build: ./frontend
         ports:
             - '3000:3000'
+        networks:
+            net:
     database:
         image: postgres
         ports:
@@ -17,4 +27,6 @@ services:
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=postgres
         volumes:
-            - ../data/db/:/var/lib/postgresql/data
+            - db:/var/lib/postgresql/data
+        networks:
+            net:
