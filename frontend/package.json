@@ -1,14 +1,20 @@
 {
-  "name": "frontend",
-  "version": "1.0.0",
-  "description": "The frontend of rpgtracker",
-  "main": "index.js",
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "vite --host",
+    "dev": "vite --host",
+    "build": "vite build",
+    "serve": "vite preview"
   },
-  "author": "Ray Kochenderfer, Cameron Kline, Nick Hergatt",
-  "license": "ISC",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.6.3",
+    "vite": "^2.8.6",
+    "vite-plugin-solid": "^2.2.6"
+  },
   "dependencies": {
-    "esbuild": "^0.14.34"
+    "solid-js": "^1.3.13"
   }
 }
