@@ -1,8 +1,8 @@
 version: '3.9'
 networks:
-  net:
+    net:
 volumes:
-  db:
+    db:
 services:
     server:
         container_name: rpgtracker-server
