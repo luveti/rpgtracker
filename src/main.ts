@@ -1,13 +1,17 @@
 import { serve } from 'https://deno.land/std@0.134.0/http/server.ts'
 
-const port = 8080
+import router from './routes.ts'
+import Database from './database.ts'
+import { Application } from 'https://deno.land/x/oak@v10.5.1/application.ts'
 
-const handler = (request: Request): Response => {
-	let body = 'Your user-agent is:\n\n'
-	body += request.headers.get('user-agent') || 'Unknown'
+const port = parseInt(Deno.env.get('PORT')!, 10)
 
-	return new Response(body, { status: 200 })
-}
+const database = new Database()
 
-console.log(`HTTP webserver running. Access it at: http://localhost:8080/`)
-await serve(handler, { port })
+const app = new Application()
+
+app.use(router.routes())
+app.use(router.allowedMethods())
+
+console.log(`HTTP webserver running at: http://localhost:8080/`)
+await app.listen({ port: port })

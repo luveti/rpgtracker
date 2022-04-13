@@ -5,20 +5,29 @@ volumes:
     db:
 services:
     server:
-        container_name: rpgtracker-server
+        container_name: dev-rpgtracker-server
         build: ./src
         ports:
             - '8080:8080'
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=postgres
+            - POSTGRES_PORT=5432
+            - POSTGRES_HOST=localhost
+            - PORT=8080
+            - POSTGRES_POOL_CONNECTIONS=20
         networks:
             net:
     frontend:
-        container_name: rpgtracker-frontend
+        container_name: dev-rpgtracker-frontend
         build: ./frontend
         ports:
             - '3000:3000'
         networks:
             net:
     database:
+        container_name: rpgtracker-postgres
         image: postgres
         ports:
             - '5432:5432'
