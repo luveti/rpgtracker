@@ -15,12 +15,17 @@ const app = new Application()
 // Logger
 app.use(async (context, next) => {
 	await next()
-	const rt = context.response.headers.get('X-Response-Time')
 	console.log(
 		`${green(context.request.method)} ${cyan(
 			decodeURIComponent(context.request.url.pathname)
 		)}`
 	)
+})
+
+// Database
+app.use(async (context, next) => {
+	context.state.database = database
+	await next()
 })
 
 // Error handler

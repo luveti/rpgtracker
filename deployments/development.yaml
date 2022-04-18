@@ -6,7 +6,7 @@ volumes:
 services:
     server:
         container_name: dev-rpgtracker-server
-        build: ./src
+        build: ../src
         ports:
             - '8080:8080'
         environment:
@@ -21,7 +21,7 @@ services:
             net:
     frontend:
         container_name: dev-rpgtracker-frontend
-        build: ./frontend
+        build: ../frontend
         ports:
             - '3000:3000'
         networks:
