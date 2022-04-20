@@ -1,18 +1,15 @@
+import { RouterContext } from 'https://deno.land/x/oak@v10.5.1/mod.ts'
 import { PostUser } from '../models/user.ts'
 import { insertUser } from '../services/users.ts'
-import { hash } from 'https://deno.land/x/argon2/lib/mod.ts'
+import { hash } from 'https://deno.land/x/bcrypt@v0.3.0/mod.ts'
 
-export const postUser = async ({
-	request,
-	response,
-}: {
-	request: any
-	response: any
-}) => {
-	const body = await request.body()
-	if (!request.hasBody) {
-		response.status = 400
-		response.body = {
+export const postUser = async (ctx: any) => {
+	const body = await ctx.request.body
+	console.log(ctx)
+	// console.log(JSON.parse(ctx))
+	if (!ctx.request.hasBody) {
+		ctx.response.status = 400
+		ctx.response.body = {
 			success: false,
 			msg: 'No data',
 		}
@@ -28,17 +25,17 @@ export const postUser = async ({
 	}
 
 	try {
-		const client = await request.state.database.connect()
+		const client = await ctx.request.state.database.connect()
 
 		const result = insertUser(client, user)
 
-		response.body = {
+		ctx.response.body = {
 			success: true,
 			data: result,
 		}
 	} catch (error) {
-		response.status = 500
-		response.body = {
+		ctx.response.status = 500
+		ctx.response.body = {
 			success: false,
 			msg: error.message,
 		}
