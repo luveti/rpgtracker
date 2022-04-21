@@ -4,9 +4,6 @@ import { insertUser } from '../services/users.ts'
 import { hash } from 'https://deno.land/x/bcrypt@v0.3.0/mod.ts'
 
 export const postUser = async (ctx: any) => {
-	const body = await ctx.request.body
-	console.log(ctx)
-	// console.log(JSON.parse(ctx))
 	if (!ctx.request.hasBody) {
 		ctx.response.status = 400
 		ctx.response.body = {
@@ -15,7 +12,7 @@ export const postUser = async (ctx: any) => {
 		}
 		return
 	}
-	const postUser: PostUser = body.value
+	const postUser: PostUser = await ctx.request.body().value
 	const user = {
 		id: crypto.randomUUID(),
 		password: await hash(postUser.password),
@@ -23,9 +20,9 @@ export const postUser = async (ctx: any) => {
 		createdAt: new Date(),
 		updatedAt: new Date(),
 	}
-
+	
 	try {
-		const client = await ctx.request.state.database.connect()
+		const client = await ctx.state.database.connect()
 
 		const result = insertUser(client, user)
 

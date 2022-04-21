@@ -40,4 +40,8 @@ export default class Database {
 	public async disconnect(client: PoolClient): Promise<void> {
 		await client.release()
 	}
+
+	public toString() {
+		return `${this.database}@${this.hostname}:${this.port}`
+	}
 }
