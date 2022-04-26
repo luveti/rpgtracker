@@ -14,7 +14,7 @@ services:
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=postgres
             - POSTGRES_PORT=5432
-            - POSTGRES_HOST=localhost
+            - POSTGRES_HOST=database
             - PORT=8080
             - POSTGRES_POOL_CONNECTIONS=20
         networks:
